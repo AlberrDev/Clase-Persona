@@ -13,18 +13,15 @@ public class Persona {
     private DateTimeFormatter GUION = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private DateTimeFormatter BARRAS = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Persona(String nombre, String apellidos, String fechaNacimiento) {
+    public Persona(String nombre, String apellidos, String fechaNacimiento) throws IllegalArgumentException {
 
         if (nombre.length() <= 0 || apellidos.length() <= 0) {
             throw new IllegalArgumentException();
         } else {
             this.nombre = nombre;
             this.apellidos = apellidos;
-            try {
-                this.fechaNacimiento = generarFecha(fechaNacimiento);
-            } catch (DateTimeException e) {
-                throw new IllegalArgumentException();
-            }
+            this.fechaNacimiento = generarFecha(fechaNacimiento); //Devolvera excepcion en caso de que la fecha no sea correcta y se propagará
+
         }
 
     }
@@ -50,7 +47,13 @@ public class Persona {
         return nombre;
     }
 
-    public String getFechaNacimiento(char separador) { //Cambiar fehca nacimiento por string con el formato
+    /**
+     * Genera fecha de Nacimiento mediante un separador
+     *
+     * @param separador Indica el valor el cual se usará para separar los dias, meses y años
+     * @return Devuelve la fecha ya sea con el separador dado '-' o '/'
+     */
+    public String getFechaNacimiento(char separador) {
         String fechaString = "";
         LocalDate fechaLocalDate;
         if (separador != '-' || separador != '/') {
@@ -85,29 +88,26 @@ public class Persona {
         int dia = 0;
         int mes = 0;
         int anyo = 0;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
-        String[] fechaSeparada = fechaNacimiento.split("[-/]"); 
-        if (!fechaNacimiento.matches("[0-9]{2}[/][0-9]{2}[/][0-9]{4}") && !fechaNacimiento.matches("[0-9]{2}[-][0-9]{2}[-][0-9]{4}")) {
+        String[] fechaSeparada = fechaNacimiento.split("[-/]");
+        if (!fechaNacimiento.matches("[0-9]{2}[/][0-9]{2}[/][0-9]{4}")
+                && !fechaNacimiento.matches("[0-9]{2}[-][0-9]{2}[-][0-9]{4}")) { //Compruebo que el formato de la fecha sea correcta
             throw new IllegalArgumentException();
         }
         try {
             dia = Integer.parseInt(fechaSeparada[0]);
             mes = Integer.parseInt(fechaSeparada[1]);
             anyo = Integer.parseInt(fechaSeparada[2]);
-            esFechaCorrecta = LocalDate.of(anyo, mes, dia);
+            return LocalDate.of(anyo, mes, dia); //Comprueba que la fecha es correcta ya que al crearlo si no es correcta salta excepcion
 
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
         } catch (DateTimeException ex) {
             throw new IllegalArgumentException();
         }
 
-        return esFechaCorrecta;
     }
 
     private boolean ComprobarString(String cadena) { //Funcion Creada para comprobar String no es null
         boolean esStringCorrecta = false;
-        if (cadena.length() <= 0) { //Se puede comparar con ("".equals(nombre))
+        if (cadena.length() <= 0) {
             esStringCorrecta = false;
         } else {
             esStringCorrecta = true;

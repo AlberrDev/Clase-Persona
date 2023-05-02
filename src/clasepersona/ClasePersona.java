@@ -25,8 +25,9 @@ public class ClasePersona {
             fechaNacimiento = sc.nextLine();
             try {
                 Gente = new Persona(nombre, apellido, fechaNacimiento);
+                
                 fechaArray = Gente.getFechaNacimiento().split("[/-]");
-
+                
                 System.out.println("Procesado: " + Gente.getNombre() + " " + Gente.getApellidos() + ", nacido el " + fechaArray[0] + " del "
                         + fechaArray[1] + " de " + fechaArray[2]);
             } catch (IllegalArgumentException e) {
@@ -39,7 +40,9 @@ public class ClasePersona {
             apellido = sc.nextLine();
             try {
                 Gente = new Persona(nombre, apellido);
+                
                 System.out.println("Procesado: " + Gente.getNombre() + " " + Gente.getApellidos() + ", nacido el " + Gente.getFechaNacimiento());
+                
             } catch (IllegalArgumentException e) {
                 System.out.println("ERROR. Procesando siguiente persona");
             }
@@ -50,12 +53,18 @@ public class ClasePersona {
 
             try {
                 Gente.setFechaNacimiento(fecha);
+                
                 fechaArray = Gente.getFechaNacimiento().split("[/-]");
+                
                 hayFechaCorrecta = true;
+                
                 System.out.println("Procesado: " + Gente.getNombre() + " " + Gente.getApellidos() + ", nacido el " + fechaArray[0] + " del "
                         + fechaArray[1] + " de " + fechaArray[2]);
+                
             } catch (IllegalArgumentException e) {
+                
                 System.out.println("Fecha Incorrecta");
+                
             }
 
         }
