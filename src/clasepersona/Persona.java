@@ -70,7 +70,7 @@ public class Persona {
         if (this.fechaNacimiento == null) {
             fechaString = null;
         } else {
-            fechaString = this.fechaNacimiento.format(GUION);
+            fechaString = getFechaNacimiento('-');
         }
 
         return fechaString;
@@ -86,7 +86,7 @@ public class Persona {
         int mes = 0;
         int anyo = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
-        String[] fechaSeparada = fechaNacimiento.split("[-/]"); //Deberiam
+        String[] fechaSeparada = fechaNacimiento.split("[-/]"); 
         if (!fechaNacimiento.matches("[0-9]{2}[/][0-9]{2}[/][0-9]{4}") && !fechaNacimiento.matches("[0-9]{2}[-][0-9]{2}[-][0-9]{4}")) {
             throw new IllegalArgumentException();
         }
