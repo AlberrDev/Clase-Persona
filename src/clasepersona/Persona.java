@@ -2,7 +2,7 @@ package clasepersona;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class Persona {
@@ -77,6 +77,26 @@ public class Persona {
         }
 
         return fechaString;
+    }
+
+    public int getEdadEnFecha(String cadenaFecha) throws IllegalArgumentException {
+        int edad = 0;
+        String fechaStringDada = "";
+        String fechaStringOriginal = "";
+        LocalDate FechaLocal;
+        LocalDate FechaLocal2;
+        FechaLocal = generarFecha(cadenaFecha);
+        FechaLocal2 = this.fechaNacimiento;
+
+        if (this.fechaNacimiento == null || FechaLocal.isBefore(FechaLocal2)) { //En caso de que la persona no tenga establecida fecha o sea anterior
+            edad = -1;
+        } else {
+            Period periot = Period.between(FechaLocal2, FechaLocal);
+
+            edad = periot.getYears();
+        }
+
+        return edad;
     }
 
     public void setFechaNacimiento(String fechaNacimiento) throws IllegalArgumentException {
