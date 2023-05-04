@@ -4,6 +4,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Persona {
 
@@ -98,6 +99,25 @@ public class Persona {
 
         return edad;
     }
+    public int getEdad() throws IllegalArgumentException {
+        int edad = 0;
+        String fechaStringDada = "";
+        String fechaStringOriginal = "";
+        LocalDate FechaLocal;
+        LocalDate FechaLocal2;
+        FechaLocal = LocalDate.now();
+        FechaLocal2 = this.fechaNacimiento;
+
+        if (this.fechaNacimiento == null || FechaLocal.isBefore(FechaLocal2)) { //En caso de que la persona no tenga establecida fecha o sea anterior
+            edad = -1;
+        } else {
+            Period periot = Period.between(FechaLocal2, FechaLocal);
+
+            edad = periot.getYears();
+        }
+
+        return edad;
+    }
 
     public void setFechaNacimiento(String fechaNacimiento) throws IllegalArgumentException {
         this.fechaNacimiento = generarFecha(fechaNacimiento);
@@ -133,6 +153,36 @@ public class Persona {
             esStringCorrecta = true;
         }
         return esStringCorrecta;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.nombre);
+        hash = 79 * hash + Objects.hashCode(this.apellidos);
+        hash = 79 * hash + Objects.hashCode(this.fechaNacimiento);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) { //Si yo soy igual al objeto dado true
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) { //Si las clases son distintas no somos iguales
+            return false;
+        }
+        final Persona other = (Persona) obj; //Al ser una persona se tendra que hacer un casting al Obj para poder compararlo.
+        if (!Objects.equals(this.nombre, other.nombre)) { //Compara que los atributos tengan el mismo valor
+            return false;
+        }
+        if (!Objects.equals(this.apellidos, other.apellidos)) {
+            return false;
+        }
+        return Objects.equals(this.fechaNacimiento, other.fechaNacimiento);
     }
 
 }
