@@ -185,4 +185,10 @@ public class Persona {
         return Objects.equals(this.fechaNacimiento, other.fechaNacimiento);
     }
 
+    @Override
+    public String toString() {
+        return "Persona{" + "nombre=" + nombre + ", apellidos=" + apellidos + ", fechaNacimiento=" + fechaNacimiento + '}';
+    }
+    
+
 }
