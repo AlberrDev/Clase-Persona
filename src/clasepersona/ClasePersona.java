@@ -1,10 +1,7 @@
 package clasepersona;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class ClasePersona {
@@ -15,12 +12,14 @@ public class ClasePersona {
         String persona = "";
         String apellidos = "";
         String fechaNacimiento = "";
-        String fechas = "";
-        String personaAntigua = "";
-        String persona1 = "";
+        String fechaReferencia = "";
+        String fechaComparar = "";
+        int edadReferencia = 0;
         int edad = 0;
-        int cantidadFechas = 0;
+        int casos = 0;
         Persona Gente = null;
+        ArrayList<Persona> Personas = new ArrayList<>(1000);
+
         cantidadPersonas = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < cantidadPersonas; i++) {
@@ -29,20 +28,27 @@ public class ClasePersona {
             fechaNacimiento = sc.nextLine();
             try {
                 Gente = new Persona(persona, apellidos, fechaNacimiento);
-                if (personaAntigua != "") {
-                    if (Gente.toString().equals(personaAntigua)) {
-                        System.out.println(Gente.toString() + " y " + personaAntigua + " son la misma");
-                    } else {
-                        System.out.println(Gente.toString() + " y " + personaAntigua + " son distintas");
-                    }
-                }
-
-                personaAntigua = Gente.toString();
-
+                Personas.add(Gente);
             } catch (IllegalArgumentException e) {
-                System.out.println("ERROR. Procesando siguiente persona");
+                System.out.println("ERROR procesando alumno. Datos incorrectos. Procesando siguiente alumno");
             }
-
         }
+        casos = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < casos; i++) {
+            fechaReferencia = sc.nextLine();
+            edadReferencia = sc.nextInt();
+            Iterator<Persona> it1 = Personas.iterator();
+            while (it1.hasNext()) {
+                Gente = it1.next();
+                edad = Gente.getEdadEnFecha(fechaReferencia);
+
+                if (edad < edadReferencia) {
+                    System.out.println(Gente.toString());
+
+                }
+            }
+        }
+
     }
 }
