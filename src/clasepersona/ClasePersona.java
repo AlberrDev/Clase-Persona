@@ -34,15 +34,17 @@ public class ClasePersona {
             }
         }
         casos = sc.nextInt();
-        sc.nextLine();
-        for (int i = 0; i < casos; i++) {
+
+        for (int i = 1; i <= casos; i++) {
+            System.out.println("CASO " + i);
+            System.out.println("----------");
+            sc.nextLine();
             fechaReferencia = sc.nextLine();
             edadReferencia = sc.nextInt();
             Iterator<Persona> it1 = Personas.iterator();
             while (it1.hasNext()) {
                 Gente = it1.next();
                 edad = Gente.getEdadEnFecha(fechaReferencia);
-
                 if (edad < edadReferencia) {
                     System.out.println(Gente.toString());
 
